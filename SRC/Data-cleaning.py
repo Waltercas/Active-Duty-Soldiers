@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from scipy import stats
 plt.style.use('ggplot')
 from statistics import mean
-import seaborn as sns
 from statsmodels.formula.api import ols
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model
@@ -109,7 +108,10 @@ def marital_status_bar_mean(df ):
     plt.rcParams.update({'font.size': 18})
     return plt.show()
 
-def ztest():
+
+def ztest_variables():
+
+    global married_prop_e, married_prop_o, total_e, total_o
     ad_marital_index = ad_marital_status.set_index('Pay Grade')
 
     js_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marriage Total'].values)
@@ -127,6 +129,8 @@ def ztest():
     officer_married = int(js_married_o) + int(civ_married_o)
     married_prop_o = officer_married/total_o
 
+def test():
+    ztest_variables()
     significance = 0.025
 
     sample_prop_e, sample_size_e = (married_prop_e, total_e)
@@ -141,13 +145,14 @@ def ztest():
     print('z_stat: %0.3f, p_value: %0.3f' % (stat, p_value))
 
     if p_value > significance:
-        print("Fail to reject the null hypothesis - we have nothing else to say")
+        statement = print("Fail to reject the null hypothesis - we have nothing else to say")
     else:
-        print("Reject the null hypothesis - suggest the alternative hypothesis is true")
+        statement = print("Reject the null hypothesis - suggest the alternative hypothesis is true")
         
+    return statement       
 
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
     
     #marital_status_plot_totals(enlisted_totals, enlisted=True)
 
@@ -155,3 +160,4 @@ def ztest():
     
     #marital_status_bar_mean(officer_totals)
     
+    test()
