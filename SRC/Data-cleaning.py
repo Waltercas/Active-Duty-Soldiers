@@ -1,4 +1,5 @@
 #Imports
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,6 +14,7 @@ import scipy as sp
 import scipy.stats as stats
 from statsmodels.stats.proportion import proportions_ztest
 
+
 #Read excel and create dataframes for officers and enlisted
 ad_marital_status = pd.read_excel ('../Data/AD-by-marital-status.xls')
 ad_marital_index = ad_marital_status.set_index('Pay Grade')
@@ -25,17 +27,20 @@ officer_totals = officer_df.drop(columns=['Single Male', 'Single Female', 'Joint
     'Single Parent Male','Single Parent Female', 'Civilian Married Male','Civilian Married Female', 'Grand Total','Total Male', 'Total Female'])
 
 
-def plot_totals_rank(df,save_bool, plot_bool):
+def plot_totals_rank(df,save_bool, plot_bool, figname= 'Marrital Status Multiple Plot By Rank'):
     '''EDA plot of service members by rank and their marital status,
     takes in a data frame and whether the data frame contains enlisted or married soldiers'''
-    
+   
+
     x = df['Pay Grade']
     single_total= df['Single Total']
     single_parent_total = df['Single Parent Total']
     joint_service_marriage_total= df['Joint Service Marriage Total']
     civilian_married_total = df['Civilian Married Total']
 
-    fig, ax = plt.subplots(figsize=(16,8)) 
+    fig, ax = plt.subplots(figsize=(16,6)) 
+    plt.rcParams.update({'font.size': 18})
+    
     ax.plot(x, single_total, label = 'Single Total') 
     ax.plot(x, single_parent_total,label = 'Single Parent Total')
     ax.plot(x, joint_service_marriage_total,label = 'Joint Service Marriage Total')
@@ -44,17 +49,17 @@ def plot_totals_rank(df,save_bool, plot_bool):
     plt.title('Service Members By Marital Status')
     plt.xlabel('Rank')
     plt.ylabel('Number of Service Members')
-    plt.rcParams.update({'font.size': 18})
+    
     
     if save_bool == 1:
-        plt.savefig('Marrital Status Multiple Plot By Rank')
+        plt.savefig(figname)
     if plot_bool == 1:
         plt.show()
         plt.grid()
 
 
 
-def bar_totals_rank(df, save_bool, plot_bool, enlisted=True):
+def bar_totals_rank(df, save_bool, plot_bool, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Rank'):
     """Multiple bar plots that display a plot of the marital status totals by rank"""
     single_total= df['Single Total'].values
     single_parent_total= df['Single Parent Total'].values
@@ -63,33 +68,37 @@ def bar_totals_rank(df, save_bool, plot_bool, enlisted=True):
 
     if enlisted==True:
         labels= ['E-1','E-2','E-3','E-4','E-5','E-6','E-7','E-8', 'E-9']
+        rank = "Officer"
     elif enlisted==False:
         labels= ['O-1','0-2','O-3','O-4','O-5','O-6','O-7','O-8', 'O-9', 'O-10']
+        rank = "Enlisted"
 
     x=np.arange(len(labels))
     width = 0.23
 
-    fig, ax = plt.subplots(figsize=(20,8)) 
+    fig, ax = plt.subplots(figsize=(16,6)) 
+    plt.rcParams.update({'font.size': 18})
+
     rects1 = ax.bar(x, single_total ,width, label='Single Total',color=['red'])
     rects2 = ax.bar(x+width, single_parent_total ,width, label='Single Parent Total',color=['blue'])
     rects3 = ax.bar(x+2*width, joint_service_marriage_total ,width, label='Joint Service Married Total',color=['green'])
     rects4 = ax.bar(x+3*width, civilian_married_total ,width, label='Civilian Married Total',color=['black'])
 
-   
+
+    plt.rcParams.update({'font.size': 18})
     plt.xticks(x+width, labels)
     plt.legend(loc="upper right")
-    plt.title('Service Members by Marital Status')
+    plt.title('{} Service Members by Marital Status'.format(rank))
     plt.xlabel('Pay Grade')
     plt.ylabel('Number of Service Members')
-    plt.rcParams.update({'font.size': 18})
-    plt.grid()
+    
     if save_bool == 1:
-        plt.savefig('Marrital Status Multiple Bar Plot By Rank')
+        plt.savefig(figname)
     if plot_bool == 1:
         plt.show()
-    return 
-
-def ad_bar_means(df,save_bool,plot_bool ):
+        plt.grid()
+        
+def bar_means(df,save_bool,plot_bool, figname = 'Marital Status Mean By Rank'):
 
     single_total = df['Single Total'].values
     single_parent_total = df['Single Parent Total'].values
@@ -106,11 +115,10 @@ def ad_bar_means(df,save_bool,plot_bool ):
     x=np.arange(len(labels))
     width = 0.23
 
-    fig, ax = plt.subplots(figsize=(20,8)) 
+    fig, ax = plt.subplots(figsize=(16,6)) 
+    plt.rcParams.update({'font.size': 18})
     plt.bar(x, y,color=['red', 'blue', 'green', 'black'] )
     
-
-   
     plt.xticks(x, labels)
     if len(df.index) > 9:
         rank = "Officers"
@@ -120,14 +128,14 @@ def ad_bar_means(df,save_bool,plot_bool ):
     plt.title('{} by Marital Status'.format(rank))
     plt.xlabel('Marital Status')
     plt.ylabel('Average Number of Service Members')
-    plt.rcParams.update({'font.size': 18})
+    
     if save_bool == 1:
-        plt.savefig('Marital Status Mean By Rank')
+        plt.savefig(figname)
     if plot_bool == 1:
         plt.show()
-    return 
+        plt.grid() 
 
-def ad_bar_mean_totals(save_bool, plot_bool):
+def ad_bar_mean(save_bool, plot_bool, ):
     '''Function that creates bar plot of mean of officer or enlisted married personel by rank
     takes in a dataframe'''
     single_total = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Total'].values)
@@ -146,7 +154,8 @@ def ad_bar_mean_totals(save_bool, plot_bool):
     x=np.arange(len(labels))
     width = 0.23
 
-    fig, ax = plt.subplots(figsize=(20,8)) 
+    fig, ax = plt.subplots(figsize=(16,6))
+    plt.rcParams.update({'font.size': 18})
     plt.bar(x, y,color=['red', 'blue', 'green', 'black'] )
     
     plt.xticks(x, labels)
@@ -154,12 +163,13 @@ def ad_bar_mean_totals(save_bool, plot_bool):
     plt.title('Service Members by Marital Status')
     plt.xlabel('Marital Status')
     plt.ylabel('Average Number of Service Members')
-    plt.rcParams.update({'font.size': 18})
+    
     if save_bool == 1:
         plt.savefig('AD Marrital Status Mean')
     if plot_bool == 1:
         plt.show()
-    return 
+        plt.grid()
+    
 
 def ztest_variables():
 
@@ -221,11 +231,32 @@ def test(proportion_A, proportion_B, population_A, population_B):
 
 
 if __name__ == '__main__':
-    
-    #marital_status_plot_totals(enlisted_totals, enlisted=True)
 
-    #marital_status_bar_totals(officer_df, False )
-    
-    #marital_status_bar_mean(officer_totals)
-    
-    ztest_variables()
+    """Fig 1-2 plots enlisted and officers marital status by rank for EDA"""
+    #plot_totals_rank(enlisted_df,1,1, figname= 'Marrital Status Multiple Plot Enlisted')
+    #plot_totals_rank(officer_df,1,1,figname= 'Marrital Status Multiple Plot Officers')
+
+    """Fig 3-4 multiple bar plots of total number of service members by marital status by rank  """
+    #bar_totals_rank(enlisted_df,1,1, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Enlisted')
+    #bar_totals_rank(officer_df,1,1, enlisted=False,figname= 'Marrital Status Multiple Bar Plot By Officers')
+
+    """Fig 5-6 bar plots of total number of service members by marital status split by officer and enlisted """
+    #bar_means(enlisted_df,1,1,figname = 'Marital Status Mean Enlisted')
+    #bar_means(officer_df,1,1,figname = 'Marital Status Mean By Officer')
+
+    """Fig 7 bar plot all active duty """
+    #ad_bar_mean(1,1)
+
+    """Creates variables for the z test"""
+    #ztest_variables()
+
+    """Z-tests (must run with variables"""
+
+
+    #test(married_prop_e, married_prop_o, total_e, total_o)
+    #test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
+    #test(married_prop, unmarried_prop, total_sm, total_sm)
+
+
+
+
