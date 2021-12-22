@@ -29,15 +29,17 @@ officer_totals = officer_df.drop(columns=['Single Male', 'Single Female', 'Joint
 
 def plot_totals_rank(df,save_bool, plot_bool, figname= 'Marrital Status Multiple Plot By Rank'):
     '''EDA plot of service members by rank and their marital status,
-    takes in a data frame and whether the data frame contains enlisted or married soldiers'''
+    takes in a data frame and whether the data frame contains enlisted or married soldiers
+    takes in bools to determine if you would like to view, save or both'''
    
-
+    #Create dataframes
     x = df['Pay Grade']
     single_total= df['Single Total']
     single_parent_total = df['Single Parent Total']
     joint_service_marriage_total= df['Joint Service Marriage Total']
     civilian_married_total = df['Civilian Married Total']
 
+    #Create plot
     fig, ax = plt.subplots(figsize=(16,6)) 
     plt.rcParams.update({'font.size': 18})
     
@@ -50,7 +52,6 @@ def plot_totals_rank(df,save_bool, plot_bool, figname= 'Marrital Status Multiple
     plt.xlabel('Rank')
     plt.ylabel('Number of Service Members')
     
-    
     if save_bool == 1:
         plt.savefig(figname)
     if plot_bool == 1:
@@ -60,7 +61,9 @@ def plot_totals_rank(df,save_bool, plot_bool, figname= 'Marrital Status Multiple
 
 
 def bar_totals_rank(df, save_bool, plot_bool, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Rank'):
-    """Multiple bar plots that display a plot of the marital status totals by rank"""
+    """Multiple bar plots that display a plot of the marital status totals by rank
+    takes in bools to determine if you would like to view, save or both"""
+
     single_total= df['Single Total'].values
     single_parent_total= df['Single Parent Total'].values
     joint_service_marriage_total = df['Joint Service Marriage Total'].values
@@ -99,6 +102,9 @@ def bar_totals_rank(df, save_bool, plot_bool, enlisted=True, figname= 'Marrital 
         plt.grid()
         
 def bar_means(df,save_bool,plot_bool, figname = 'Marital Status Mean By Rank'):
+    """Function that takes a data frame and creates a bar plot of the means of soldiers marital status
+    one for officers and enlisted
+    takes in bools to determine if you would like to view, save or both"""
 
     single_total = df['Single Total'].values
     single_parent_total = df['Single Parent Total'].values
@@ -137,7 +143,8 @@ def bar_means(df,save_bool,plot_bool, figname = 'Marital Status Mean By Rank'):
 
 def ad_bar_mean(save_bool, plot_bool, ):
     '''Function that creates bar plot of mean of officer or enlisted married personel by rank
-    takes in a dataframe'''
+    takes in a dataframe takes in bools to determine if you would like to view, save or both'''
+
     single_total = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Total'].values)
     single_parent_total = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Parent Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Parent Total'].values)
     joint_service_marriage_total = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marriage Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Joint Service Marriage Total'].values)
@@ -170,6 +177,24 @@ def ad_bar_mean(save_bool, plot_bool, ):
         plt.show()
         plt.grid()
     
+def ad_pie_chart(save_bool, plot_bool):
+    single_total = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Total'].values)
+    single_parent_total = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Parent Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Parent Total'].values)
+    joint_service_marriage_total = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marriage Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Joint Service Marriage Total'].values)
+    civilian_married_total = int(ad_marital_index.loc[['TOTAL OFFICER'],'Civilian Married Total'].values) + int(ad_marital_index.loc[['TOTAL ENLISTED'],'Civilian Married Total'].values)
+
+    y= np.array([single_total, single_parent_total, joint_service_marriage_total, civilian_married_total])
+    mylabels = ["Single", "Single Parent", "Joint Service Married", "Civilian Married"]
+
+    plt.figure(figsize = (16,6))
+    plt.rcParams.update({'font.size': 18})
+    plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'blue', 'green', 'orange'])
+    plt.grid()
+    if save_bool == 1:
+        plt.savefig('AD Pie Chart')
+    if plot_bool == 1:
+        plt.show()
+        plt.grid()
 
 def ztest_variables():
 
@@ -257,6 +282,6 @@ if __name__ == '__main__':
     #test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
     #test(married_prop, unmarried_prop, total_sm, total_sm)
 
-
+    #ad_pie_chart(1,1)
 
 
