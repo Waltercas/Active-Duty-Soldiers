@@ -189,7 +189,7 @@ def ad_pie_chart(save_bool, plot_bool):
     plt.figure(figsize = (16,6))
     plt.rcParams.update({'font.size': 18})
     plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'blue', 'green', 'orange'])
-    plt.grid()
+    
     if save_bool == 1:
         plt.savefig('AD Pie Chart')
     if plot_bool == 1:
@@ -258,19 +258,22 @@ def test(proportion_A, proportion_B, population_A, population_B):
 if __name__ == '__main__':
 
     """Fig 1-2 plots enlisted and officers marital status by rank for EDA"""
-    #plot_totals_rank(enlisted_df,1,1, figname= 'Marrital Status Multiple Plot Enlisted')
-    #plot_totals_rank(officer_df,1,1,figname= 'Marrital Status Multiple Plot Officers')
+    #plot_totals_rank(enlisted_df,0,1, figname= 'Marrital Status Multiple Plot Enlisted')
+    #plot_totals_rank(officer_df,0,1,figname= 'Marrital Status Multiple Plot Officers')
 
     """Fig 3-4 multiple bar plots of total number of service members by marital status by rank  """
-    #bar_totals_rank(enlisted_df,1,1, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Enlisted')
-    #bar_totals_rank(officer_df,1,1, enlisted=False,figname= 'Marrital Status Multiple Bar Plot By Officers')
+    #bar_totals_rank(enlisted_df,0,1, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Enlisted')
+    #bar_totals_rank(officer_df,0,1, enlisted=False,figname= 'Marrital Status Multiple Bar Plot By Officers')
 
     """Fig 5-6 bar plots of total number of service members by marital status split by officer and enlisted """
-    #bar_means(enlisted_df,1,1,figname = 'Marital Status Mean Enlisted')
-    #bar_means(officer_df,1,1,figname = 'Marital Status Mean By Officer')
+    #bar_means(enlisted_df,0,1,figname = 'Marital Status Mean Enlisted')
+    #bar_means(officer_df,0,1,figname = 'Marital Status Mean By Officer')
 
     """Fig 7 bar plot all active duty """
-    #ad_bar_mean(1,1)
+    #ad_bar_mean(0,1)
+
+    """Fig 8 pie chart active duty"""
+    #ad_pie_chart(0,1)
 
     """Creates variables for the z test"""
     #ztest_variables()
@@ -282,6 +285,6 @@ if __name__ == '__main__':
     #test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
     #test(married_prop, unmarried_prop, total_sm, total_sm)
 
-    #ad_pie_chart(1,1)
+    
 
 
