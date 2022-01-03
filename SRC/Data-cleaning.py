@@ -44,7 +44,7 @@ js_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marria
 civ_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Civilian Married Total'].values)
 total_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Grand Total'].values)
 
-
+plt.rcParams['figure.dpi'] = 100
 def plot_totals_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Plot By Rank'):
     '''EDA plot of service members by rank and their marital status,
     takes in a data frame and whether the data frame contains enlisted or married soldiers
@@ -64,30 +64,35 @@ def plot_totals_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Pl
     civilian_married_total2 = officer_df['Civilian Married Total']
 
     #Create plot
-    fig, ax = plt.subplots(2,figsize=(16,6)) 
-    plt.rcParams.update({'font.size': 18})
+    fig, ax = plt.subplots(2,figsize=(9,4))
+    
     fig.suptitle('Service Member Marital Status By Rank')
 
-    ax[0].plot(x, single_total, label = 'Single Total') 
-    ax[0].plot(x, single_parent_total,label = 'Single Parent Total')
-    ax[0].plot(x, joint_service_marriage_total,label = 'Joint Service Marriage Total')
-    ax[0].plot(x,civilian_married_total ,label = 'Civilian Marriage Total')
 
-    ax[1].plot(x2, single_total2) 
-    ax[1].plot(x2, single_parent_total2)
-    ax[1].plot(x2, joint_service_marriage_total2)
-    ax[1].plot(x2,civilian_married_total2)
+    ax[0].plot(x, single_total, label = 'Single Total', color=('red')) 
+    ax[0].plot(x, single_parent_total,label = 'Single Parent Total',color=('blue'))
+    ax[0].plot(x, joint_service_marriage_total,label = 'Joint Service Marriage Total',color=('green'))
+    ax[0].plot(x,civilian_married_total ,label = 'Civilian Marriage Total',color=('orange'))
+
+    ax[1].plot(x2, single_total2,color=('red')) 
+    ax[1].plot(x2, single_parent_total2,color=('blue'))
+    ax[1].plot(x2, joint_service_marriage_total2,color=('green'))
+    ax[1].plot(x2,civilian_married_total2,color=('orange'))
     
-    fig.legend(loc="upper right")
+    fig.legend(loc="upper right",fontsize=10)
     
-    plt.xlabel('Rank')
-    plt.ylabel('Number of Service Members')
+    fig.text(0.5, 0.02, 'Rank', ha='center')
+    fig.text(0.04, 0.5, 'Number of Service Members', va='center', rotation='vertical')
+
+
+    
     
     if save_bool == 1:
         plt.savefig(figname)
     if plot_bool == 1:
-        plt.show()
         plt.grid()
+        plt.show()
+        
 
 
 
@@ -116,7 +121,7 @@ def bar_totals_rank(df, save_bool, plot_bool, enlisted=True, figname= 'Marrital 
     rects1 = ax.bar(x, single_total ,width, label='Single Total',color=['red'])
     rects2 = ax.bar(x+width, single_parent_total ,width, label='Single Parent Total',color=['blue'])
     rects3 = ax.bar(x+2*width, joint_service_marriage_total ,width, label='Joint Service Married Total',color=['green'])
-    rects4 = ax.bar(x+3*width, civilian_married_total ,width, label='Civilian Married Total',color=['black'])
+    rects4 = ax.bar(x+3*width, civilian_married_total ,width, label='Civilian Married Total',color=['orange'])
 
 
     plt.rcParams.update({'font.size': 18})
@@ -209,15 +214,16 @@ def ad_pie_chart(save_bool, plot_bool):
     y= np.array([single_total_ad, single_parent_total_ad, joint_service_marriage_total_ad, civilian_married_total_ad])
     mylabels = ["Single", "Single Parent", "Joint Service Married", "Civilian Married"]
 
-    plt.figure(figsize = (16,6))
-    plt.rcParams.update({'font.size': 18})
+    plt.figure(figsize = (8,6))
+    plt.rcParams.update({'font.size': 12})
+    plt.title('Active Duty Service Member by Marital Status')
     plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'blue', 'green', 'orange'])
     
     if save_bool == 1:
         plt.savefig('AD Pie Chart')
     if plot_bool == 1:
         plt.show()
-        plt.grid()
+       
 
 def ztest_variables():
 
@@ -281,8 +287,8 @@ def test(proportion_A, proportion_B, population_A, population_B):
 if __name__ == '__main__':
 
     """Fig 1-2 plots enlisted and officers marital status by rank for EDA"""
-    plot_totals_rank(0,1, figname= 'Marrital Status Multiple Plot Enlisted')
-    #plot_totals_rank(officer_df,0,1,figname= 'Marrital Status Multiple Plot Officers')
+    #plot_totals_rank(1,1, figname = 'Marrital Status Multiple Plot')
+    
 
     """Fig 3-4 multiple bar plots of total number of service members by marital status by rank  """
     #bar_totals_rank(enlisted_df,0,1, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Enlisted')
@@ -296,16 +302,16 @@ if __name__ == '__main__':
     #ad_bar_mean(0,1)
 
     """Fig 8 pie chart active duty"""
-    #ad_pie_chart(0,1)
+    #ad_pie_chart(1,1)
 
     """Creates variables for the z test"""
-    #ztest_variables()
+    ztest_variables()
 
     """Z-tests (must run with variables"""
 
 
-    #test(married_prop_e, married_prop_o, total_e, total_o)
-    #test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
+    test(married_prop_e, married_prop_o, total_e, total_o)
+    test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
     #test(married_prop, unmarried_prop, total_sm, total_sm)
 
     
