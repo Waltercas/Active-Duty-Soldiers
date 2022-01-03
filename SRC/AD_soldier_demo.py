@@ -64,7 +64,7 @@ def plot_totals_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Pl
     civilian_married_total2 = officer_df['Civilian Married Total']
 
     #Create plot
-    fig, ax = plt.subplots(2,figsize=(9,4))
+    fig, ax = plt.subplots(2,figsize=(10,5),dpi=200)
     
     fig.suptitle('Service Member Marital Status By Rank')
 
@@ -83,14 +83,10 @@ def plot_totals_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Pl
     
     fig.text(0.5, 0.02, 'Rank', ha='center')
     fig.text(0.04, 0.5, 'Number of Service Members', va='center', rotation='vertical')
-
-
-    
-    
+  
     if save_bool == 1:
         plt.savefig(figname)
     if plot_bool == 1:
-        plt.grid()
         plt.show()
         
 
@@ -124,7 +120,7 @@ def bar_totals_rank(df, save_bool, plot_bool, enlisted=True, figname= 'Marrital 
     rects4 = ax.bar(x+3*width, civilian_married_total ,width, label='Civilian Married Total',color=['orange'])
 
 
-    plt.rcParams.update({'font.size': 18})
+    plt.rcParams.update({'font.size': 12})
     plt.xticks(x+width, labels)
     plt.legend(loc="upper right")
     plt.title('{} Service Members by Marital Status'.format(rank))
@@ -157,8 +153,8 @@ def bar_means(df,save_bool,plot_bool, figname = 'Marital Status Mean By Rank'):
     x=np.arange(len(labels))
     width = 0.23
 
-    fig, ax = plt.subplots(figsize=(16,6)) 
-    plt.rcParams.update({'font.size': 18})
+    fig, ax = plt.subplots(figsize=(10,5),dpi=200) 
+    plt.rcParams.update({'font.size': 12})
     plt.bar(x, y,color=['red', 'blue', 'green', 'black'] )
     
     plt.xticks(x, labels)
@@ -182,7 +178,6 @@ def ad_bar_mean(save_bool, plot_bool, ):
     takes in a dataframe takes in bools to determine if you would like to view, save or both'''
 
 
-
     single_total_mean =np.mean(single_total_ad)
     single_parent_total_mean =np.mean(single_parent_total_ad)
     joint_service_marriage_total_mean = np.mean(joint_service_marriage_total_ad)
@@ -193,7 +188,7 @@ def ad_bar_mean(save_bool, plot_bool, ):
     x=np.arange(len(labels))
     width = 0.23
 
-    fig, ax = plt.subplots(figsize=(16,6))
+    fig, ax = plt.subplots(figsize=(10,5))
     plt.rcParams.update({'font.size': 18})
     plt.bar(x, y,color=['red', 'blue', 'green', 'black'] )
     
@@ -210,7 +205,10 @@ def ad_bar_mean(save_bool, plot_bool, ):
         plt.grid()
     
 def ad_pie_chart(save_bool, plot_bool):
-    
+    '''Funtion creates a pie chart of active duty service members by marital status
+    uses a dataframe and bools to determine whether to save, display or both'''
+
+
     y= np.array([single_total_ad, single_parent_total_ad, joint_service_marriage_total_ad, civilian_married_total_ad])
     mylabels = ["Single", "Single Parent", "Joint Service Married", "Civilian Married"]
 
@@ -226,7 +224,6 @@ def ad_pie_chart(save_bool, plot_bool):
        
 
 def ztest_variables():
-
     global married_prop_e, married_prop_o, married_prop, unmarried_prop_e, unmarried_prop_o, unmarried_prop, total_o, total_sm, total_e, total_unmarried, total_married
     ad_marital_index = ad_marital_status.set_index('Pay Grade')
 
@@ -295,8 +292,8 @@ if __name__ == '__main__':
     #bar_totals_rank(officer_df,0,1, enlisted=False,figname= 'Marrital Status Multiple Bar Plot By Officers')
 
     """Fig 5-6 bar plots of total number of service members by marital status split by officer and enlisted """
-    #bar_means(enlisted_df,0,1,figname = 'Marital Status Mean Enlisted')
-    #bar_means(officer_df,0,1,figname = 'Marital Status Mean By Officer')
+    bar_means(enlisted_df,1,1,figname = 'Marital Status Mean Enlisted')
+    #bar_means(officer_df,1,1,figname = 'Marital Status Mean By Officer')
 
     """Fig 7 bar plot all active duty """
     #ad_bar_mean(0,1)
@@ -305,13 +302,13 @@ if __name__ == '__main__':
     #ad_pie_chart(1,1)
 
     """Creates variables for the z test"""
-    ztest_variables()
+    #ztest_variables()
 
     """Z-tests (must run with variables"""
 
 
-    test(married_prop_e, married_prop_o, total_e, total_o)
-    test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
+    #test(married_prop_e, married_prop_o, total_e, total_o)
+    #test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
     #test(married_prop, unmarried_prop, total_sm, total_sm)
 
     
