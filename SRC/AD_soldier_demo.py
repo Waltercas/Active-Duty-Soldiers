@@ -212,7 +212,7 @@ def ad_pie_chart(save_bool, plot_bool):
     y= np.array([single_total_ad, single_parent_total_ad, joint_service_marriage_total_ad, civilian_married_total_ad])
     mylabels = ["Single", "Single Parent", "Joint Service Married", "Civilian Married"]
 
-    plt.figure(figsize = (8,6))
+    plt.figure(figsize = (8,6),dpi=100)
     plt.rcParams.update({'font.size': 12})
     plt.title('Active Duty Service Member by Marital Status')
     plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'blue', 'green', 'orange'])
@@ -292,7 +292,7 @@ if __name__ == '__main__':
     #bar_totals_rank(officer_df,0,1, enlisted=False,figname= 'Marrital Status Multiple Bar Plot By Officers')
 
     """Fig 5-6 bar plots of total number of service members by marital status split by officer and enlisted """
-    bar_means(enlisted_df,1,1,figname = 'Marital Status Mean Enlisted')
+    #bar_means(enlisted_df,1,1,figname = 'Marital Status Mean Enlisted')
     #bar_means(officer_df,1,1,figname = 'Marital Status Mean By Officer')
 
     """Fig 7 bar plot all active duty """
@@ -302,14 +302,14 @@ if __name__ == '__main__':
     #ad_pie_chart(1,1)
 
     """Creates variables for the z test"""
-    #ztest_variables()
+    ztest_variables()
 
     """Z-tests (must run with variables"""
 
 
-    #test(married_prop_e, married_prop_o, total_e, total_o)
-    #test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
-    #test(married_prop, unmarried_prop, total_sm, total_sm)
+    test(married_prop_e, married_prop_o, total_e, total_o)
+    test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
+    test(married_prop, unmarried_prop, total_sm, total_sm)
 
     
 
