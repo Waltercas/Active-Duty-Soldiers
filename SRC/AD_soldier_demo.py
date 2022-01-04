@@ -307,9 +307,9 @@ if __name__ == '__main__':
     """Z-tests (must run with variables"""
 
 
-    test(married_prop_e, married_prop_o, total_e, total_o)
+    #test(married_prop_e, married_prop_o, total_e, total_o)
     test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
-    test(married_prop, unmarried_prop, total_sm, total_sm)
+    #test(married_prop, unmarried_prop, total_sm, total_sm)
 
     
 
