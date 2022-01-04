@@ -13,8 +13,7 @@ Soldiers have different needs and there are different factors that determine tho
 The data frame that I used for this project was sourced from Data.gov created in 2010.  In the data frame are active duty service members sorted by rank and marital status.  There was no missing data or nan's in the data frame.  The data frame encompasses almost 1.5 million service members from all branches.
 
 
-
-![img](https://lh6.googleusercontent.com/Hq0sscOOaxOSGeOom_dCX_zbHAHfFzi63PWvTnpCaS_Yx2uua-uTOaa5jfl7aAEFLE9o-3q72EuQMoLB-VeK5tm-l0KdxEJ5ysH2fNQDNs9_TJHxlnnAtYi3KSFha_kIEL0eZm-P8Q4_)
+![Screenshot from 2021-12-15 20-09-29](https://user-images.githubusercontent.com/92833923/148118243-46ffa108-f6cd-4174-95b7-43bd9e97f039.png)
 
 
 
@@ -26,21 +25,22 @@ The rows are indexed by pay grade ranging from E-1 to O-10
 
 When I started exploring the data I wanted to look at the relationship of rank and marital status so I plotted  both officers and enlisted in two different subplots.
 
-![](/home/walter/Desktop/Soldier-Demographic_CAPSTONE/Images/Marrital Status Multiple Plot.png)
+![Marrital Status Multiple Plot](https://user-images.githubusercontent.com/92833923/148117743-2b72484c-6c93-435d-805b-cc4335497ad0.png)
 
 This graph showed me some interesting facts. 
 
 First I can see that at the rank E-3 there is the most amount of single soldiers. This makes sense to me since most of soldiers in this rank are young. At E-5 you can see the most amount married on average from my experience in the Army usually E-5s have been in about 5 years so one can deduce they would be aged around 23 years old. 
 
 After this graph I figured it would be best for me to look at marital status as a whole so I plotted two separate bar charts of the average number of soldiers by marital status by rank.
+![Marital Status Mean Enlisted](https://user-images.githubusercontent.com/92833923/148117784-74a4583d-b69a-4134-a4d7-f39fc412add0.png)
 
- <img src="/home/walter/Desktop/Soldier-Demographic_CAPSTONE/Images/Marital Status Mean Enlisted.png" style="zoom:80%;" />
+![Marital Status Mean By Officer](https://user-images.githubusercontent.com/92833923/148117836-b15b0fe1-88ce-4f5a-bbac-aa9128bf9ade.png)
 
-<img src="/home/walter/Desktop/Soldier-Demographic_CAPSTONE/Images/Marital Status Mean By Officer.png" style="zoom:80%;" />
+
 
 I decided it would be easier to just look at both together so I created a pie chart of all active duty service members by marital status.
 
-<img src="/home/walter/Desktop/Soldier-Demographic_CAPSTONE/Images/AD Pie Chart.png" alt="AD Pie Chart" style="zoom:80%;" />
+![AD Pie Chart](https://user-images.githubusercontent.com/92833923/148118345-23d190a4-7e26-490d-ba40-4d2035d8cda5.png)
 
 Now after creating this pie chart it looks like married personnel out number single service members so then I transitioned to hypothesis testing
 
