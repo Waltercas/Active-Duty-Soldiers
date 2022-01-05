@@ -32,19 +32,43 @@ single_parent_total_ad = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Par
 joint_service_marriage_total_ad = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marriage Total'].values) + int(ad_marital_index.loc[['TOTAL OFFICER'],'Joint Service Marriage Total'].values)
 civilian_married_total_ad = int(ad_marital_index.loc[['TOTAL OFFICER'],'Civilian Married Total'].values) + int(ad_marital_index.loc[['TOTAL ENLISTED'],'Civilian Married Total'].values)
 
-single_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Total'].values)
-single_parent_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Parent Total'].values)
-js_married_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Joint Service Marriage Total'].values)
-civ_married_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Civilian Married Total'].values)
-total_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Grand Total'].values)
 
-single_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Total'].values)
-single_parent_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Parent Total'].values)
-js_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marriage Total'].values)
-civ_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Civilian Married Total'].values)
-total_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Grand Total'].values)
 
 plt.rcParams['figure.dpi'] = 100
+def ztest_variables():
+    global married_prop_e, married_prop_o, married_prop, unmarried_prop_e, unmarried_prop_o, unmarried_prop, total_o, total_sm, total_e, total_unmarried, total_married
+    ad_marital_index = ad_marital_status.set_index('Pay Grade')
+
+    single_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Total'].values)
+    single_parent_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Parent Total'].values)
+    js_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marriage Total'].values)
+    civ_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Civilian Married Total'].values)
+    total_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Grand Total'].values)
+    enlisted_married = int(js_married_e) + int(civ_married_e)
+    enlisted_unmarried = single_parent_e + single_e
+
+
+    single_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Total'].values)
+    single_parent_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Parent Total'].values)
+    js_married_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Joint Service Marriage Total'].values)
+    civ_married_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Civilian Married Total'].values)
+    total_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Grand Total'].values)
+    officer_married = int(js_married_o) + int(civ_married_o)
+    officer_unmarried = single_parent_o + single_o
+
+
+    total_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Grand Total'].values)
+    total_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Grand Total'].values)
+    total_sm =total_e + total_o
+    total_married = enlisted_married + officer_married
+    total_unmarried = enlisted_unmarried + officer_unmarried
+    unmarried_prop_e = enlisted_unmarried/total_e
+    unmarried_prop_o = officer_unmarried/total_o
+    unmarried_prop = total_unmarried / total_sm
+    married_prop_o = officer_married/total_o
+    married_prop_e = enlisted_married/total_e
+    married_prop = total_married / total_sm
+
 def plot_totals_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Plot By Rank'):
     '''EDA plot of service members by rank and their marital status,
     takes in a data frame and whether the data frame contains enlisted or married soldiers
@@ -90,7 +114,52 @@ def plot_totals_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Pl
         plt.show()
         
 
+def plot_prop_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Plot By Rank'):
+    '''EDA plot of service members by rank and their marital status,
+    takes in a data frame and whether the data frame contains enlisted or married soldiers
+    takes in bools to determine if you would like to view, save or both'''
+    officer_df2 = ad_marital_status[10:20]
+    enlisted_df2 = ad_marital_status[:9]
+    
+    #Create dataframes
+    x = enlisted_df2['Pay Grade']
+    single_total= enlisted_df2['Single Total']/enlisted_df2['Grand Total']
+    single_parent_total = enlisted_df2['Single Parent Total']/enlisted_df2['Grand Total']
+    joint_service_marriage_total= enlisted_df2['Joint Service Marriage Total']/enlisted_df2['Grand Total']
+    civilian_married_total = enlisted_df2['Civilian Married Total']/enlisted_df2['Grand Total']
 
+    x2 = officer_df2['Pay Grade']
+    single_total2= officer_df2['Single Total']/officer_df2['Grand Total']
+    single_parent_total2 = officer_df2['Single Parent Total']/officer_df2['Grand Total']
+    joint_service_marriage_total2= officer_df2['Joint Service Marriage Total']/officer_df2['Grand Total']
+    civilian_married_total2 = officer_df2['Civilian Married Total']/officer_df2['Grand Total']
+
+    #Create plot
+    fig, ax = plt.subplots(2,figsize=(10,6),dpi=200)
+    
+    
+    fig.suptitle('Service Member Marital Status By Rank')
+
+    
+    ax[0].plot(x, single_total, label = 'Single Total', color=('red')) 
+    ax[0].plot(x, single_parent_total,label = 'Single Parent Total',color=('blue'))
+    ax[0].plot(x, joint_service_marriage_total,label = 'Joint Service Marriage Total',color=('green'))
+    ax[0].plot(x,civilian_married_total ,label = 'Civilian Marriage Total',color=('orange'))
+    
+    ax[1].plot(x2, single_total2,color=('red')) 
+    ax[1].plot(x2, single_parent_total2,color=('blue'))
+    ax[1].plot(x2, joint_service_marriage_total2,color=('green'))
+    ax[1].plot(x2,civilian_married_total2,color=('orange'))
+    
+    fig.legend(loc="upper right",fontsize=10)
+    
+    fig.text(0.5, 0.02, 'Rank', ha='center')
+    fig.text(0.04, 0.5, 'Proportion of Service Members', va='center', rotation='vertical')
+  
+    if save_bool == 1:
+        plt.savefig(figname)
+    if plot_bool == 1:
+        plt.show()
 
 def bar_totals_rank(df, save_bool, plot_bool, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Rank'):
     """Multiple bar plots that display a plot of the marital status totals by rank
@@ -223,40 +292,6 @@ def ad_pie_chart(save_bool, plot_bool):
         plt.show()
        
 
-def ztest_variables():
-    global married_prop_e, married_prop_o, married_prop, unmarried_prop_e, unmarried_prop_o, unmarried_prop, total_o, total_sm, total_e, total_unmarried, total_married
-    ad_marital_index = ad_marital_status.set_index('Pay Grade')
-
-    single_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Total'].values)
-    single_parent_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Single Parent Total'].values)
-    js_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Joint Service Marriage Total'].values)
-    civ_married_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Civilian Married Total'].values)
-    total_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Grand Total'].values)
-    enlisted_married = int(js_married_e) + int(civ_married_e)
-    enlisted_unmarried = single_parent_e + single_e
-
-
-    single_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Total'].values)
-    single_parent_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Single Parent Total'].values)
-    js_married_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Joint Service Marriage Total'].values)
-    civ_married_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Civilian Married Total'].values)
-    total_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Grand Total'].values)
-    officer_married = int(js_married_o) + int(civ_married_o)
-    officer_unmarried = single_parent_o + single_o
-
-
-    total_e = int(ad_marital_index.loc[['TOTAL ENLISTED'],'Grand Total'].values)
-    total_o = int(ad_marital_index.loc[['TOTAL OFFICER'],'Grand Total'].values)
-    total_sm =total_e + total_o
-    total_married = enlisted_married + officer_married
-    total_unmarried = enlisted_unmarried + officer_unmarried
-    unmarried_prop_e = enlisted_unmarried/total_e
-    unmarried_prop_o = officer_unmarried/total_o
-    unmarried_prop = total_unmarried / total_sm
-    married_prop_o = officer_married/total_o
-    married_prop_e = enlisted_married/total_e
-    married_prop = total_married / total_sm
-
 
 def test(proportion_A, proportion_B, population_A, population_B):
     ztest_variables()
@@ -283,10 +318,12 @@ def test(proportion_A, proportion_B, population_A, population_B):
 
 if __name__ == '__main__':
 
-    """Fig 1-2 plots enlisted and officers marital status by rank for EDA"""
+    """Fig 1-2 plots enlisted and officers marital status by rank for EDA TOTAL"""
     #plot_totals_rank(1,1, figname = 'Marrital Status Multiple Plot')
-    
 
+    """Fig 1-2 plots enlisted and officers marital status by rank for EDA PROPORTION"""
+    plot_prop_rank(1,1, figname = 'Marrital Status Multiple Plot Prop')
+    
     """Fig 3-4 multiple bar plots of total number of service members by marital status by rank  """
     #bar_totals_rank(enlisted_df,0,1, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Enlisted')
     #bar_totals_rank(officer_df,0,1, enlisted=False,figname= 'Marrital Status Multiple Bar Plot By Officers')
@@ -302,15 +339,14 @@ if __name__ == '__main__':
     #ad_pie_chart(1,1)
 
     """Creates variables for the z test"""
-    ztest_variables()
+    #ztest_variables()
 
     """Z-tests (must run with variables"""
 
 
     #test(married_prop_e, married_prop_o, total_e, total_o)
-    test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
+    #test(unmarried_prop_e, unmarried_prop_o, total_e, total_o)
     #test(married_prop, unmarried_prop, total_sm, total_sm)
 
     
-
 
