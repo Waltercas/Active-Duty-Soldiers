@@ -284,7 +284,7 @@ def ad_pie_chart(save_bool, plot_bool):
     plt.figure(figsize = (8,6),dpi=100)
     plt.rcParams.update({'font.size': 12})
     plt.title('Active Duty Service Member by Marital Status')
-    plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'blue', 'green', 'orange'])
+    plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'cyan', 'green', 'orange'])
     
     if save_bool == 1:
         plt.savefig('AD Pie Chart')
@@ -322,7 +322,7 @@ if __name__ == '__main__':
     #plot_totals_rank(1,1, figname = 'Marrital Status Multiple Plot')
 
     """Fig 1-2 plots enlisted and officers marital status by rank for EDA PROPORTION"""
-    plot_prop_rank(1,1, figname = 'Marrital Status Multiple Plot Prop')
+    #plot_prop_rank(1,1, figname = 'Marrital Status Multiple Plot Prop')
     
     """Fig 3-4 multiple bar plots of total number of service members by marital status by rank  """
     #bar_totals_rank(enlisted_df,0,1, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Enlisted')
@@ -336,10 +336,10 @@ if __name__ == '__main__':
     #ad_bar_mean(0,1)
 
     """Fig 8 pie chart active duty"""
-    #ad_pie_chart(1,1)
+    ad_pie_chart(1,1)
 
     """Creates variables for the z test"""
-    #ztest_variables()
+    ztest_variables()
 
     """Z-tests (must run with variables"""
 
