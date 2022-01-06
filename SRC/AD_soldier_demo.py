@@ -136,20 +136,20 @@ def plot_prop_rank(save_bool, plot_bool, figname= 'Marrital Status Multiple Plot
 
     #Create plot
     fig, ax = plt.subplots(2,figsize=(10,6),dpi=200)
-    
+    plt.rcParams.update({'font.size': 10})
     
     fig.suptitle('Service Member Marital Status By Rank')
 
     
-    ax[0].plot(x, single_total, label = 'Single Total', color=('red')) 
-    ax[0].plot(x, single_parent_total,label = 'Single Parent Total',color=('blue'))
-    ax[0].plot(x, joint_service_marriage_total,label = 'Joint Service Marriage Total',color=('green'))
-    ax[0].plot(x,civilian_married_total ,label = 'Civilian Marriage Total',color=('orange'))
+    ax[0].plot(x, single_total, label = 'Single Total', color=('red'),linewidth=2.0) 
+    ax[0].plot(x, single_parent_total,label = 'Single Parent Total',color=('blue'),linewidth=2.0)
+    ax[0].plot(x, joint_service_marriage_total,label = 'Joint Service Marriage Total',color=('green'),linewidth=2.0)
+    ax[0].plot(x,civilian_married_total ,label = 'Civilian Marriage Total',color=('orange'),linewidth=2.0)
     
-    ax[1].plot(x2, single_total2,color=('red')) 
-    ax[1].plot(x2, single_parent_total2,color=('blue'))
-    ax[1].plot(x2, joint_service_marriage_total2,color=('green'))
-    ax[1].plot(x2,civilian_married_total2,color=('orange'))
+    ax[1].plot(x2, single_total2,color=('red'),linewidth=2.0) 
+    ax[1].plot(x2, single_parent_total2,color=('blue'),linewidth=2.0)
+    ax[1].plot(x2, joint_service_marriage_total2,color=('green'),linewidth=2.0)
+    ax[1].plot(x2,civilian_married_total2,color=('orange'),linewidth=2.0)
     
     fig.legend(loc="upper right",fontsize=10)
     
@@ -281,10 +281,10 @@ def ad_pie_chart(save_bool, plot_bool):
     y= np.array([single_total_ad, single_parent_total_ad, joint_service_marriage_total_ad, civilian_married_total_ad])
     mylabels = ["Single", "Single Parent", "Joint Service Married", "Civilian Married"]
 
-    plt.figure(figsize = (8,6),dpi=100)
+    plt.figure(figsize = (8,6),dpi=200)
     plt.rcParams.update({'font.size': 12})
     plt.title('Active Duty Service Member by Marital Status')
-    plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'blue', 'green', 'orange'])
+    plt.pie(y, labels = mylabels, autopct = "%0.1f%%" ,colors=['red', 'cyan', 'green', 'orange'])
     
     if save_bool == 1:
         plt.savefig('AD Pie Chart')
@@ -339,7 +339,7 @@ if __name__ == '__main__':
     #ad_pie_chart(1,1)
 
     """Creates variables for the z test"""
-    #ztest_variables()
+    ztest_variables()
 
     """Z-tests (must run with variables"""
 
