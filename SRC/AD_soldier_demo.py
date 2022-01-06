@@ -322,7 +322,7 @@ if __name__ == '__main__':
     #plot_totals_rank(1,1, figname = 'Marrital Status Multiple Plot')
 
     """Fig 1-2 plots enlisted and officers marital status by rank for EDA PROPORTION"""
-    plot_prop_rank(1,1, figname = 'Marrital Status Multiple Plot Prop')
+    #plot_prop_rank(1,1, figname = 'Marrital Status Multiple Plot Prop')
     
     """Fig 3-4 multiple bar plots of total number of service members by marital status by rank  """
     #bar_totals_rank(enlisted_df,0,1, enlisted=True, figname= 'Marrital Status Multiple Bar Plot By Enlisted')
@@ -336,7 +336,7 @@ if __name__ == '__main__':
     #ad_bar_mean(0,1)
 
     """Fig 8 pie chart active duty"""
-    #ad_pie_chart(1,1)
+    ad_pie_chart(1,1)
 
     """Creates variables for the z test"""
     ztest_variables()
